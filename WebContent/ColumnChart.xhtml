@@ -1,0 +1,56 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:h="http://java.sun.com/jsf/html">
+
+	<ui:composition pricelate="/layouts/CommonLayout.xhtml">
+			<ui:define name="title">Login</ui:define>
+			<ui:define name="content">
+				<div class="container h-50">
+					<div id="chart_div" class="pos-center"></div>
+				</div>
+				
+				<script type="text/javascript">
+				google.charts.load('current', {packages: ['corechart', 'bar']});
+				google.charts.setOnLoadCallback(drawMultSeries);
+
+				function drawMultSeries() {
+					google.charts.load("current", {packages:['corechart']});
+				    google.charts.setOnLoadCallback(drawChart);
+				    function drawChart() {
+				      var data = google.visualization.arrayToDataTable([
+				        ["Date", Price", { role: "style" } ],
+				        ['#{stock.week.dayOne}', #{stock.week.priceOne}, "Blue"],
+				        ['#{stock.week.dayTwo}', #{stock.week.priceTwo}, "Blue"],
+				        ['#{stock.week.dayThree}', #{stock.week.priceThree}, "Blue"],
+				        ['#{stock.week.dayFour}', #{stock.week.priceFour}, "Blue"],
+				        ['#{stock.week.dayFive}', #{stock.week.priceFive}, "Blue"],
+				        ['#{stock.week.daySix}', #{stock.week.priceSix}, "Blue"],
+				        ['#{stock.week.daySeven}', #{stock.week.priceSeven}, "Blue"]
+				      ]);
+
+				      var view = new google.visualization.DataView(data);
+				      view.setColumns([0, 1,
+				                       { calc: "stringify",
+				                         sourceColumn: 1,
+				                         type: "string",
+				                         role: "annotation" },
+				                       2]);
+
+				      var options = {
+				        title: "test",
+				        width: 600,
+				        height: 400,
+				        bar: {groupWidth: "95%"},
+				        legend: { position: "none" },
+				      };
+				      var chart = new google.visualization.ColumnChart(document.getElementById("chart_div"));
+				      chart.draw(view, options);
+				  }
+				    }
+				</script>
+			</ui:define>
+	</ui:composition>
+
+</html>
